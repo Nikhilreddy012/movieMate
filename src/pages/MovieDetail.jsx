@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import Vibrant from 'node-vibrant';
 import { MdPlayCircleOutline } from "react-icons/md";
 import axios from "axios";
 import YouTubeModal from "../components/YoutubeModal";
@@ -49,20 +48,22 @@ const MovieDetail = () => {
   }, [params.id]);
 
   useEffect(() => {
-    const corsProxyUrl = 'https://cors-anywhere.herokuapp.com/';
-    // Load the image and extract the dominant color when it has finished loading
     const extractColor = async () => {
       try {
-        // Use node-vibrant to extract dominant color from the image
-        // const response = await axios.get(bgUrl, {
-        //   responseType: 'arraybuffer',
-        // });
-        const vibrant = new Vibrant(`${corsProxyUrl}${bgUrl}`);
-        const colorPalette = await vibrant.getPalette(); // Extracts palette
-        const dominant = colorPalette.DarkVibrant || colorPalette.Muted; // You can also check other color keys
+        const response = await axios.get(
+          `/.netlify/functions/getDominantColor?imageUrl=${encodeURIComponent(
+            bgUrl
+          )}`
+        );
 
-        if (dominant) {
-          setColor(dominant.getHex()); // Set the dominant color
+        console.log('response', response)
+
+        const dominantColor = response.data.hexColor
+
+        console.log('dominant', dominantColor)
+
+        if (dominantColor) {
+          setColor(dominantColor); // Set the dominant color
           setLoadingColor(false)
         }
       } catch (error) {
