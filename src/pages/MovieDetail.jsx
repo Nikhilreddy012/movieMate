@@ -51,7 +51,7 @@ const MovieDetail = () => {
     const extractColor = async () => {
       try {
         const response = await axios.get(
-          `/.netlify/functions/getDominantColor?imageUrl=${encodeURIComponent(
+          `https://nikhil-moviemate.netlify.app/.netlify/functions/getDominantColor?imageUrl=${encodeURIComponent(
             bgUrl
           )}`
         );
