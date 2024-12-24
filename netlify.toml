@@ -3,6 +3,6 @@
   publish = "public"
 
 [[redirects]]
-  from = "/.netlify/functions/*"
-  to = "/functions/:splat"
+  from = "/*"
+  to = "/index.html"
   status = 200
